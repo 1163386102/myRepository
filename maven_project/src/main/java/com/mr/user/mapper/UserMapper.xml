@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mr.user.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.mr.user.entity.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_login_name" property="userLoginName" jdbcType="VARCHAR" />
+    <result column="user_login_pass" property="userLoginPass" jdbcType="VARCHAR" />
+    <result column="user_real_name" property="userRealName" jdbcType="VARCHAR" />
+    <result column="user_sex" property="userSex" jdbcType="INTEGER" />
+    <result column="user_age" property="userAge" jdbcType="INTEGER" />
+    <result column="user_err_pass_count" property="userErrPassCount" jdbcType="INTEGER" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_login_name, user_login_pass, user_real_name, user_sex, user_age, user_err_pass_count, 
+    user_phone
+  </sql>
+  
+  <!-- 根据登陆名进行查询的方法 -->
+  <select id="selectByUserLoginName" resultMap="BaseResultMap" parameterType="com.mr.user.entity.User">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where user_login_name = #{userLoginName}
+  </select> 
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.user.entity.User" >
+    insert into t_user (user_id, user_login_name, user_login_pass, 
+      user_real_name, user_sex, user_age, 
+      user_err_pass_count, user_phone)
+    values (#{userId,jdbcType=INTEGER}, #{userLoginName,jdbcType=VARCHAR}, #{userLoginPass,jdbcType=VARCHAR}, 
+      #{userRealName,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, #{userAge,jdbcType=INTEGER}, 
+      #{userErrPassCount,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mr.user.entity.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userLoginName != null" >
+        user_login_name,
+      </if>
+      <if test="userLoginPass != null" >
+        user_login_pass,
+      </if>
+      <if test="userRealName != null" >
+        user_real_name,
+      </if>
+      <if test="userSex != null" >
+        user_sex,
+      </if>
+      <if test="userAge != null" >
+        user_age,
+      </if>
+      <if test="userErrPassCount != null" >
+        user_err_pass_count,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userLoginName != null" >
+        #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginPass != null" >
+        #{userLoginPass,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userAge != null" >
+        #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="userErrPassCount != null" >
+        #{userErrPassCount,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.user.entity.User" >
+    update t_user
+    <set >
+      <if test="userLoginName != null" >
+        user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginPass != null" >
+        user_login_pass = #{userLoginPass,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        user_real_name = #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        user_sex = #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userAge != null" >
+        user_age = #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="userErrPassCount != null" >
+        user_err_pass_count = #{userErrPassCount,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.user.entity.User" >
+    update t_user
+    set user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      user_login_pass = #{userLoginPass,jdbcType=VARCHAR},
+      user_real_name = #{userRealName,jdbcType=VARCHAR},
+      user_sex = #{userSex,jdbcType=INTEGER},
+      user_age = #{userAge,jdbcType=INTEGER},
+      user_err_pass_count = #{userErrPassCount,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

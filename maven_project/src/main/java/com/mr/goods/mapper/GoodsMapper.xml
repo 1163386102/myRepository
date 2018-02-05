@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mr.goods.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.mr.goods.entity.Goods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DOUBLE" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
+    <result column="goods_date" property="goodsDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goods_id, goods_name, goods_type_id, goods_price, goods_count, goods_date
+  </sql>
+  <!-- 分页查询商品集合 -->
+  <select id="queryGoodsList" resultMap="BaseResultMap" >
+  	 select 
+    goods_id
+    from t_goods limit #{start},#{pageItem}
+  </select>
+  
+  <!-- 查询总条数 -->
+  <select id="queryGoodsCount" resultType="int">
+  	select count(1) from t_goods
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mr.goods.entity.Goods" keyProperty="goodsId" useGeneratedKeys="true">
+    insert into t_goods (goods_id, goods_name, goods_type_id, 
+      goods_price, goods_count, goods_date
+      )
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsTypeId,jdbcType=INTEGER}, 
+      #{goodsPrice,jdbcType=DOUBLE}, #{goodsCount,jdbcType=INTEGER}, #{goodsDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mr.goods.entity.Goods" >
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsTypeId != null" >
+        goods_type_id,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsCount != null" >
+        goods_count,
+      </if>
+      <if test="goodsDate != null" >
+        goods_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeId != null" >
+        #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsCount != null" >
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDate != null" >
+        #{goodsDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mr.goods.entity.Goods" >
+    update t_goods
+    <set >
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeId != null" >
+        goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsCount != null" >
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDate != null" >
+        goods_date = #{goodsDate,jdbcType=DATE},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mr.goods.entity.Goods" >
+    update t_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      goods_date = #{goodsDate,jdbcType=DATE}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>
